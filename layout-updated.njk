@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{{ title }}</title>
+    <style>
+      {{ css | safe }}
+    </style>
+    {% if stylesheet %}
+    <link rel="stylesheet" href="{{ stylesheet }}">
+    {% endif %}
+  </head>
+  <body>
+    <textarea id="source">{{ file.contents | safe }}</textarea>
+    <script src="vendor/remark.js"></script>
+    <script>
+      var hljs = remark.highlighter.engine;
+    </script>
+    {# <script>{remarkLanguage | safe}</script> #}
+    <script>
+      remark.create({{ remarkConfig | dump | safe }})
+    </script>
+    {% if live %}
+    <script>
+      document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+      ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
+    {% endif %}
+  </body>
+</html>
